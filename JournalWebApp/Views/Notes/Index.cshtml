@@ -5,26 +5,41 @@
 }
 
 <h1>Here's your list of notes....</h1>
+<span><a asp-action="Create" class="btn btn-primary" id="create-btn" role="button">Create a note</a></span>
 
+<!-- Table to show list of notes -->
 <table class="table">
+    <!-- Title of each row -->
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Title)</th>
             <th>@Html.DisplayNameFor(model => model.Content)</th>
             <th>@Html.DisplayNameFor(model => model.IsActive)</th>
-            <th>@Html.DisplayNameFor(model => model.CreationDate)</th>
+            <th>Actions</th>
         </tr>
     </thead>
+    <!-- Content of each row-->
     <tbody>
         @foreach (var note in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(noteModel => note.Title)</td>
-                <td>@Html.DisplayFor(noteModel => note.Content)</td>
-                <td>@Html.DisplayFor(noteModel => note.IsActive)</td>
-                <td>@Html.DisplayFor(noteModel => note.CreationDate)</td>
+                <td id="td-title">
+                    @Html.DisplayFor(noteModel => note.Title)
+                    <hr />
+                    <span id="note-date">@Html.DisplayFor(noteModel => note.CreationDate)</span>
+                </td>
+                <td id="td-context">
+                    <textarea id="note-small">@Html.DisplayFor(noteModel => note.Content)</textarea>
+                </td>
+                <td id="td-active">
+                    @Html.DisplayFor(noteModel => note.IsActive)
+                </td>
+                <td id="td-actions">
+                    <a asp-action="Edit" asp-route-id="@note.Id "class="btn btn-sm btn-outline-info" id="action-buttons">Edit</a>
+                    <a asp-action="Details" asp-route-id="@note.Id" class="btn btn-sm btn-outline-info" id="action-buttons">View</a>
+                    <a asp-action="Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-warning" id="action-buttons">Delete</a>
+                </td>
             </tr>
-
         }
     </tbody>
 </table>

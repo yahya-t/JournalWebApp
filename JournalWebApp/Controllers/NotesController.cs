@@ -1,45 +1,91 @@
-﻿using JournalWebApp.Models;
+﻿using JournalWebApp.Logic;
+using JournalWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JournalWebApp.Controllers
 {
     public class NotesController : Controller
     {
-        public List<NotesModel> Notes { get; set; }
+        public readonly INotesLogic _logic;
 
-        public NotesController()
+        public NotesController(INotesLogic logic)
         {
-            Notes = SampleNotes();
+            _logic = logic;
         }
 
-        public IActionResult Index()
+        // GET: Index
+        public async Task<IActionResult> Index()
         {
-            return View(Notes);
+            var notes = await _logic.GetAllNotesAsync();
+            return View(notes);
         }
 
-        // Return a sample list of notes
-        private List<NotesModel> SampleNotes()
+        // GET: Details
+        public async Task<IActionResult> Details(int id)
         {
-            return new List<NotesModel>
+            var note = await _logic.GetNoteByIdAsync(id);
+            return note == null ? NotFound() : View(note);
+        }
+
+        // GET: Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,CreationDate,Title,Content,IsActive")] NotesModel note)
+        {
+            if (ModelState.IsValid)
             {
-                new NotesModel
-                {
-                    Id = 1,
-                    CreationDate = DateTime.Now,
-                    Title = "This is an example of a note you can create!",
-                    Content = "This is a web application designed for you to create notes and increase you productivity...",
-                    IsActive = true
-                },
-                new NotesModel
-                {
-                    Id = 2,
-                    CreationDate = DateTime.Now.AddDays(-1),
-                    Title = "Another example note",
-                    Content = "Notes can be deactivated if you don't need them, but you also don't want to delete them",
-                    IsActive = false
-                }
-            };
+                await _logic.AddNoteAsync(note);
+                return RedirectToAction("Index");
+            }
+            return View(note);
         }
 
+        // GET: Edit
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id == null) return View("NotFound");
+
+            var note = await _logic.GetNoteByIdAsync(id);
+            return note == null ? View("Not Found") : View(note);
+        }
+
+        // POST: Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("Id,CreationDate,Title,Content,IsActive")] int id, NotesModel note)
+        {
+            if (id != note.Id) return View("Not Found");
+
+            if (ModelState.IsValid)
+            {
+                await _logic.UpdateNoteAsync(note);
+                return RedirectToAction("Index");
+            }
+            return View(note);
+        }
+
+        // GET: Delete
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == null) return View("NotFound");
+
+            var note = await _logic.GetNoteByIdAsync(id);
+            return note == null ? View("Not Found") : View(note);
+        }
+
+        // POST: Delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _logic.DeleteNoteAsync(id);
+            return RedirectToAction("Index");
+        }
     }
 }
