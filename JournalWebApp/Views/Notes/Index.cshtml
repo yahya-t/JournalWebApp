@@ -1,5 +1,47 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<NotesModel>
+
 @{
+    ViewData["Title"] = "Notes";
 }
+
+<h1>Here's your list of notes....</h1>
+<span><a asp-action="Create" class="btn btn-primary create-btn" role="button">Create a note</a></span>
+
+<!-- Table to show list of notes -->
+<table class="table">
+    <!-- Title of each row -->
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Content)</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <!-- Content of each row-->
+    <tbody>
+        @foreach (var note in Model)
+        {
+            <tr>
+                <td class="td-title">
+                    <span class="note-title-header">@Html.DisplayFor(noteModel => note.Title)</span>
+                    <hr />
+                    <span class="note-date">@Html.DisplayFor(noteModel => note.CreationDate)</span>
+                </td>
+                <td class="td-context">
+                    <textarea class="note-small" readonly>@Html.DisplayFor(noteModel => note.Content)</textarea>
+                </td>
+                <td class="td-active">
+                    <label class="container" readonly>
+                        @Html.DisplayFor(noteModel => note.IsActive)
+                    </label>
+                </td>
+                <td id="td-actions">
+                    <a asp-action="Details" asp-route-id="@note.Id" class="btn btn-sm btn-outline-info action-buttons">View</a>
+                    <a asp-action="Edit" asp-route-id="@note.Id " class="btn btn-sm btn-outline-warning action-buttons">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-danger action-buttons">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

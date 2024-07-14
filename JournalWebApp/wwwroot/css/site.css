@@ -20,3 +20,79 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.create-btn {
+    margin-top: 1em; 
+    margin-bottom:1em;
+}
+
+.create-note-div {
+    max-width: 400px;
+}
+
+.back-to-list-btn {
+    color: white;
+    margin-left: 1em;
+}
+
+.back-to-list-btn:hover {
+    color: white;
+}
+
+.note-title-header {
+    font-weight: 500;
+}
+
+.note-title-input {
+    width: 400px;
+}
+
+.note-content-header {
+    font-weight: 500;
+    margin-top: 1em;
+}
+
+.note-active-header {
+    font-weight: 500;
+    margin-top: 1em;
+}
+
+.note-date {
+    font-size: 80%;
+}
+
+.note-small {
+    min-width: 100%;
+    min-height: 100px;
+    text-align: start;
+}
+
+.note-large {
+    width: 400px;
+    height: 300px;
+    text-align: start;
+}
+
+.td-title {
+    width:25%;
+}
+
+.td-context {
+    width:50%;
+}
+
+.td-active {
+    width:10%;
+}
+
+.td-actions {
+    width:15%;
+}
+
+.action-buttons {
+    margin:3px;
+}
+
+.action-buttons:hover {
+    color:white;
+}
