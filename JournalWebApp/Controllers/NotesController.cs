@@ -40,6 +40,7 @@ namespace JournalWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                note.CreationDate = DateTime.Now;
                 await _logic.AddNoteAsync(note);
                 return RedirectToAction("Index");
             }

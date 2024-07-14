@@ -5,7 +5,7 @@
 }
 
 <h1>Here's your list of notes....</h1>
-<span><a asp-action="Create" class="btn btn-primary" id="create-btn" role="button">Create a note</a></span>
+<span><a asp-action="Create" class="btn btn-primary create-btn" role="button">Create a note</a></span>
 
 <!-- Table to show list of notes -->
 <table class="table">
@@ -14,7 +14,7 @@
         <tr>
             <th>@Html.DisplayNameFor(model => model.Title)</th>
             <th>@Html.DisplayNameFor(model => model.Content)</th>
-            <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -23,21 +23,23 @@
         @foreach (var note in Model)
         {
             <tr>
-                <td id="td-title">
-                    @Html.DisplayFor(noteModel => note.Title)
+                <td class="td-title">
+                    <span class="note-title-header">@Html.DisplayFor(noteModel => note.Title)</span>
                     <hr />
-                    <span id="note-date">@Html.DisplayFor(noteModel => note.CreationDate)</span>
+                    <span class="note-date">@Html.DisplayFor(noteModel => note.CreationDate)</span>
                 </td>
-                <td id="td-context">
-                    <textarea id="note-small">@Html.DisplayFor(noteModel => note.Content)</textarea>
+                <td class="td-context">
+                    <textarea class="note-small" readonly>@Html.DisplayFor(noteModel => note.Content)</textarea>
                 </td>
-                <td id="td-active">
-                    @Html.DisplayFor(noteModel => note.IsActive)
+                <td class="td-active">
+                    <label class="container" readonly>
+                        @Html.DisplayFor(noteModel => note.IsActive)
+                    </label>
                 </td>
                 <td id="td-actions">
-                    <a asp-action="Edit" asp-route-id="@note.Id "class="btn btn-sm btn-outline-info" id="action-buttons">Edit</a>
-                    <a asp-action="Details" asp-route-id="@note.Id" class="btn btn-sm btn-outline-info" id="action-buttons">View</a>
-                    <a asp-action="Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-warning" id="action-buttons">Delete</a>
+                    <a asp-action="Details" asp-route-id="@note.Id" class="btn btn-sm btn-outline-info action-buttons">View</a>
+                    <a asp-action="Edit" asp-route-id="@note.Id " class="btn btn-sm btn-outline-warning action-buttons">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-danger action-buttons">Delete</a>
                 </td>
             </tr>
         }
