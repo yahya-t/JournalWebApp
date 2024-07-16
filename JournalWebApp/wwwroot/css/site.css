@@ -1,5 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
 html {
   font-size: 14px;
+}
+
+
+body {
+    font-family: 'Ubuntu', sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -22,8 +29,9 @@ body {
 }
 
 .create-btn {
-    margin-top: 1em; 
-    margin-bottom:1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-weight: bold;
 }
 
 .create-note-div {
@@ -31,8 +39,8 @@ body {
 }
 
 .back-to-list-btn {
-    color: white;
     margin-left: 1em;
+    font-weight:bold;
 }
 
 .back-to-list-btn:hover {
@@ -45,6 +53,8 @@ body {
 
 .note-title-input {
     width: 400px;
+    font-weight: 600;
+    background-color: lightgrey;
 }
 
 .note-content-header {
@@ -59,18 +69,22 @@ body {
 
 .note-date {
     font-size: 80%;
+    color:lightgray;
 }
 
 .note-small {
     min-width: 100%;
-    min-height: 100px;
+    min-height: 200px;
     text-align: start;
+    background-color: lightgrey;
 }
 
 .note-large {
     width: 400px;
     height: 300px;
     text-align: start;
+    font-weight: 600;
+    background-color: lightgrey;
 }
 
 .td-title {
@@ -90,9 +104,34 @@ body {
 }
 
 .action-buttons {
-    margin:3px;
+    margin: 3px;
+    font-weight: 600;
 }
 
 .action-buttons:hover {
     color:white;
+}
+
+/* ----- LINK ANIMATION ----- */
+a.underlined-link {
+    position: relative;
+    color: rgb(206, 206, 206);
+    text-decoration: none;
+}
+
+a.underlined-link::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: azure;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+a.underlined-link:hover::before {
+    transform: scaleX(1);
 }
