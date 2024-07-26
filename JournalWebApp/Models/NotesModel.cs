@@ -1,17 +1,23 @@
 ﻿using JournalWebApp.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace JournalWebApp.Models
 {
     public class NotesModel
     {
         public int Id { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime CreationDate { get; set; }
+        
+        [Required]
         public string Title { get; set; }
+
+        [Required]
         public string Content { get; set; }
+
         public bool IsActive { get; set; }
-
-        // Methods
-
+        
         /** Converts a instance of a Note to a NotesModel */
         public static NotesModel ToNotesModel(Note note)
         {

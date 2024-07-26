@@ -29,10 +29,14 @@
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary create-btn"/>
-                <a asp-action="Index" class="btn btn-warning back-to-list-btn">Back to List</a>
+                <input type="submit" value="Create" class="btn btn-outline-success create-btn" />
+                <a asp-action="Index" class="btn btn-outline-warning back-to-list-btn">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

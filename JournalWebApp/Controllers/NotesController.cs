@@ -6,11 +6,13 @@ namespace JournalWebApp.Controllers
 {
     public class NotesController : Controller
     {
-        public readonly INotesLogic _logic;
+        private readonly INotesLogic _logic;
+        private readonly ILogger<NotesController> _logger;
 
-        public NotesController(INotesLogic logic)
+        public NotesController(INotesLogic logic, ILogger<NotesController> logger)
         {
             _logic = logic;
+            _logger = logger;
         }
 
         // GET: Index
@@ -24,7 +26,12 @@ namespace JournalWebApp.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var note = await _logic.GetNoteByIdAsync(id);
-            return note == null ? NotFound() : View(note);
+            if (note == null)
+            {
+                _logger.LogInformation("Details not found for ID {id}", id);
+                return View("NotFound");
+            }
+            return View(note);
         }
 
         // GET: Create
@@ -50,10 +57,21 @@ namespace JournalWebApp.Controllers
         // GET: Edit
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null) return View("NotFound");
+            if (id == null)
+            {
+                _logger.LogInformation("No ID was passed");
+                return View("NotFound");
+            }
 
             var note = await _logic.GetNoteByIdAsync(id);
-            return note == null ? View("Not Found") : View(note);
+
+            if (note == null)
+            {
+                _logger.LogInformation("Edit details not found for id {id}", id);
+                return View("NotFound");
+            }
+
+            return View(note);
         }
 
         // POST: Edit
@@ -61,7 +79,7 @@ namespace JournalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("Id,CreationDate,Title,Content,IsActive")] int id, NotesModel note)
         {
-            if (id != note.Id) return View("Not Found");
+            if (id != note.Id) return View("NotFound");
 
             if (ModelState.IsValid)
             {
@@ -74,10 +92,19 @@ namespace JournalWebApp.Controllers
         // GET: Delete
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null) return View("NotFound");
+            if (id == null)
+            {
+                _logger.LogInformation("Delete details not found for id {id}", id);
+                return View("NotFound");
+            }
 
             var note = await _logic.GetNoteByIdAsync(id);
-            return note == null ? View("Not Found") : View(note);
+            if (note == null)
+            {
+                _logger.LogInformation("Delete Details not found for id {id}", id);
+                return View("NotFound");
+            }
+            return View(note);
         }
 
         // POST: Delete
