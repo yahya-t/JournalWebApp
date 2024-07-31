@@ -1,9 +1,11 @@
 ﻿using JournalWebApp.Logic;
 using JournalWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JournalWebApp.Controllers
 {
+    [Authorize]
     public class NotesController : Controller
     {
         private readonly INotesLogic _logic;
